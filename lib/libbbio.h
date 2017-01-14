@@ -9,8 +9,19 @@
 
 #include <rtdm/rtdm.h>
 
-#include <bbgpio.h>
-#include <bbpwm.h>
+//! code indicating GPIO input direction
+#define DIR_IN             1
+//! code indicating GPIO output direction
+#define DIR_OUT            2
+//! code indicating GPIO IRQ input direction
+#define DIR_IRQ            3
+
+//! code indicating GPIO IRQ rising edge
+#define EDGE_RISING        1
+//! code indicating GPIO IRQ falling edge
+#define EDGE_FALLING       2
+//! code indicating GPIO IRQ both edges
+#define EDGE_BOTH          3
 
 int bbgpio_open_input(char *gpio);
 int bbgpio_open_output(char *gpio);
@@ -37,3 +48,6 @@ int bbpwm_set_duty_us_b(int dev, int duty_ns);
 int bbpwm_close(int dev);
 
 #endif /* INCLUDE_LIBBBIO_H_ */
+
+
+

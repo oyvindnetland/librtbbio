@@ -1,15 +1,15 @@
-CC = $(BB-KERNEL)/dl/gcc-linaro-4.9-2015.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
+CC = $(BB_KERNEL)/dl/gcc-linaro-4.9-2015.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-gcc
 
-LIBCFLAGS = -Wall -I../rtgpio -I$(XENO_INSTALL)/include/cobalt 
-LIBCFLAGS += -I$(XENO_INSTALL)/include -I$(BB-KERNEL)/KERNEL/drivers/xenomai/beaglebone -fPIC  
+LIBCFLAGS = -Wall -I../rtgpio -I$(XENO_INSTALL)/usr/xenomai/include/cobalt 
+LIBCFLAGS += -I$(XENO_INSTALL)/usr/xenomai/include -I$(BB_KERNEL)/KERNEL/drivers/xenomai/beaglebone -fPIC  
 
-CFLAGS = -Wall -I../rtio -Ilib -I$(XENO_INSTALL)/include/cobalt -I$(BB-KERNEL)/KERNEL/drivers/xenomai/beaglebone
-CFLAGS += -I$(XENO_INSTALL)/include -march=armv7-a -mfpu=vfp3 -D_GNU_SOURCE 
-CFLAGS += -D_REENTRANT -D__COBALT__ -D__COBALT_WRAP_ -I$(XENO_INSTALL)/include/alchemy 
+CFLAGS = -Wall -I../rtio -Ilib -I$(XENO_INSTALL)/usr/xenomai/include/cobalt
+CFLAGS += -I$(XENO_INSTALL)/usr/xenomai/include/alchemy -I$(XENO_INSTALL)/usr/xenomai/include 
+CFLAGS += -march=armv7-a -mfpu=vfp3 -D_GNU_SOURCE -D_REENTRANT -D__COBALT__ -D__COBALT_WRAP_  
 
-LFLAGS = -lalchemy -lcopperplate $(XENO_INSTALL)/lib/xenomai/bootstrap.o 
-LFLAGS += -Wl,--wrap=main -Wl,--dynamic-list=$(XENO_INSTALL)/lib/dynlist.ld 
-LFLAGS += -L$(XENO_INSTALL)/lib -lcobalt -lpthread -lrt 
+LFLAGS = -lalchemy -lcopperplate $(XENO_INSTALL)/usr/xenomai/lib/xenomai/bootstrap.o 
+LFLAGS += -Wl,--wrap=main -Wl,--dynamic-list=$(XENO_INSTALL)/usr/xenomai/lib/dynlist.ld 
+LFLAGS += -L$(XENO_INSTALL)/usr/xenomai/lib -lcobalt -lpthread -lrt 
 LFLAGS += -lbbio  -march=armv7-a -mfpu=vfp3 -Llib  
 
 lib: lib/libbbio.o

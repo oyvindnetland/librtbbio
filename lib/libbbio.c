@@ -4,6 +4,9 @@
 #include <error.h>
 #include <alchemy/task.h>
 
+#include <bbgpio.h>
+#include <bbpwm.h>
+
 #include "libbbio.h"
 
 int bbgpio_open_input(char *gpio)
@@ -62,7 +65,15 @@ int bbgpio_dir_get(int dev)
 		return ret;
 	}
 
-	return dir;
+    if (dir == BBGPIO_DIR_IN) {
+        return DIR_IN;
+    } else if (dir == BBGPIO_DIR_OUT) {
+        return DIR_OUT;
+    } else if (dir == BBGPIO_DIR_IRQ) {
+        return DIR_IRQ;
+    } else {
+        return -1;
+    }
 }
 
 int bbgpio_edge_get(int dev)
@@ -75,12 +86,32 @@ int bbgpio_edge_get(int dev)
 		return ret;
 	}
 
-	return edge;
+   if (edge == BBGPIO_IOCTL_EDGE_RISING) {
+        return EDGE_RISING;
+    } else if (edge == BBGPIO_IOCTL_EDGE_FALLING) {
+        return EDGE_FALLING;
+    } else if (edge == BBGPIO_IOCTL_EDGE_BOTH) {
+        return EDGE_BOTH;
+    } else {
+        return -1;
+    }
 }
 
 int bbgpio_edge_set(int dev, int edge)
 {
-	return __RT(ioctl(dev, BBGPIO_IOCTL_EDGE_SET, &edge));
+    int edge_ioctl;
+
+    if (edge == EDGE_RISING) {
+        edge_ioctl = BBGPIO_IOCTL_EDGE_RISING;
+    } else if (edge == EDGE_FALLING) {
+        edge_ioctl = BBGPIO_IOCTL_EDGE_FALLING;
+    } else if (edge == EDGE_BOTH) {
+        edge_ioctl = BBGPIO_IOCTL_EDGE_BOTH;
+    } else {
+        return -1;
+    }
+
+	return __RT(ioctl(dev, BBGPIO_IOCTL_EDGE_SET, &edge_ioctl));
 }
 
 int bbgpio_timeout_get(int dev)
