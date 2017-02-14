@@ -31,8 +31,8 @@ int bbgpio_set(int dev, int value);
 int bbgpio_dir_get(int dev);
 int bbgpio_edge_get(int dev);
 int bbgpio_edge_set(int dev, int edge);
-int bbgpio_timeout_get(int dev);
-int bbgpio_timeout_set(int dev, int timout_me);
+nanosecs_rel_t bbgpio_timeout_get(int dev);
+int bbgpio_timeout_set(int dev, nanosecs_rel_t timout_ms);
 void bbgpio_close(int dev);
 
 int bbpwm_open(char *pwm, int period_ms);

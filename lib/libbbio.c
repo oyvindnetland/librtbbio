@@ -114,22 +114,22 @@ int bbgpio_edge_set(int dev, int edge)
 	return __RT(ioctl(dev, BBGPIO_IOCTL_EDGE_SET, &edge_ioctl));
 }
 
-int bbgpio_timeout_get(int dev)
+nanosecs_rel_t bbgpio_timeout_get(int dev)
 {
 	int ret;
-	int timeout_ms;
-	ret = __RT(ioctl(dev, BBGPIO_IOCTL_TIMEOUT_GET, &timeout_ms));
+    nanosecs_rel_t timeout_ns;
+	ret = __RT(ioctl(dev, BBGPIO_IOCTL_TIMEOUT_GET, &timeout_ns));
 
 	if (ret < 0) {
 		return ret;
 	}
 
-	return timeout_ms;
+	return timeout_ns;
 }
 
-int bbgpio_timeout_set(int dev, int timeout_ms)
+int bbgpio_timeout_set(int dev, nanosecs_rel_t timeout_ns)
 {
-	return __RT(ioctl(dev, BBGPIO_IOCTL_TIMEOUT_SET, &timeout_ms));
+	return __RT(ioctl(dev, BBGPIO_IOCTL_TIMEOUT_SET, &timeout_ns));
 }
 
 void bbgpio_close(int dev)
